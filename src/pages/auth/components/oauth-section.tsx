@@ -1,12 +1,14 @@
-import { Button } from "@/components/ui/button";
-import { FaFacebook, FaGithub } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
+
+import { Button } from "@/components/ui/button";
 
 export function OauthSection({
   onOAuthSignup,
   isPending,
 }: {
-  onOAuthSignup: (provider: "google" | "facebook" | "github") => void;
+  onOAuthSignup: (provider: "google" | "facebook" | "twitter") => void;
   isPending: boolean;
 }) {
   return (
@@ -30,10 +32,10 @@ export function OauthSection({
       <Button
         variant="outline"
         className="w-full p-4"
-        onClick={() => onOAuthSignup("github")}
+        onClick={() => onOAuthSignup("twitter")}
         disabled={isPending}
       >
-        <FaGithub size={20} />
+        <FaXTwitter size={20} />
       </Button>
     </div>
   );

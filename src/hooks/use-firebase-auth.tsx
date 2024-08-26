@@ -7,10 +7,11 @@ import {
   firebasePasswordResetEmail,
 } from "@/lib/firebase/auth/auth-with-email";
 import {
+  firebaseMicrosoftSignin,
   firebaseFacebookSignin,
+  firebaseTwitterSignin,
   firebaseGithubSignin,
   firebaseGoogleSignin,
-  firebaseMicrosoftSignin,
 } from "@/lib/firebase/auth/auth-with-provider";
 
 type AuthFunction = (
@@ -67,9 +68,11 @@ export function useFirebaseAuth() {
 
   const onFirebaseGoogleSignin = () => handleOAuth(firebaseGoogleSignin);
 
-  const onFirebaseFacebookSignin = () => handleOAuth(firebaseFacebookSignin);
-
   const onFirebaseGithubSignin = () => handleOAuth(firebaseGithubSignin);
+
+  const onFirebaseTwitterSignin = () => handleOAuth(firebaseTwitterSignin);
+
+  const onFirebaseFacebookSignin = () => handleOAuth(firebaseFacebookSignin);
 
   const onFIrebaserMicrosoftSignin = () => handleOAuth(firebaseMicrosoftSignin);
 
@@ -102,9 +105,10 @@ export function useFirebaseAuth() {
     onFirebaseEmailSignup,
     onFirebaseEmailSignin,
     onFirebaseGoogleSignin,
-    onFIrebaserMicrosoftSignin,
-    onFirebaseFacebookSignin,
     onFirebaseGithubSignin,
+    onFirebaseTwitterSignin,
+    onFirebaseFacebookSignin,
+    onFIrebaserMicrosoftSignin,
     firebasePasswordResetEmail,
     onFirebasePasswordResetEmail,
     onFirebaseConfirmPasswordReset,

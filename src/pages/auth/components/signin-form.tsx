@@ -31,8 +31,8 @@ export function SigninForm() {
     error,
     onFirebaseEmailSignin,
     onFirebaseGoogleSignin,
+    onFirebaseTwitterSignin,
     onFirebaseFacebookSignin,
-    onFirebaseGithubSignin,
   } = useFirebaseAuth();
 
   const {
@@ -57,12 +57,12 @@ export function SigninForm() {
     }
   };
 
-  const onOAuthSignup = async (provider: "google" | "facebook" | "github") => {
+  const onOAuthSignup = async (provider: "google" | "facebook" | "twitter") => {
     try {
       const data = await (provider === "google"
         ? onFirebaseGoogleSignin()
-        : provider === "github"
-        ? onFirebaseGithubSignin()
+        : provider === "twitter"
+        ? onFirebaseTwitterSignin()
         : onFirebaseFacebookSignin());
       if (data?.error) return;
       const { displayName, email, photoURL, uid } =
