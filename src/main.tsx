@@ -1,6 +1,5 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { ReactQueryProvider } from "./providers/react-query-provider.tsx";
 
@@ -13,6 +12,5 @@ createRoot(document.getElementById("root")!).render(
     <ReactQueryProvider>
       <App />
     </ReactQueryProvider>
-    <SpeedInsights />
   </StrictMode>
 );
