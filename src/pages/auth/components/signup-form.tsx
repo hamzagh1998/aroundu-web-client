@@ -185,6 +185,7 @@ export function SignupForm() {
             </div>
             <Button
               type="submit"
+              size="lg"
               className="w-full font-bold mt-4"
               disabled={isPending}
             >

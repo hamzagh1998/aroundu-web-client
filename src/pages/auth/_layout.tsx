@@ -4,7 +4,7 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
   const currentTheme = useCurrentTheme();
 
   return (
-    <main className="w-full h-full flex justify-center items-center flex-col space-y-6">
+    <main className="w-full h-fit flex justify-center items-center flex-col space-y-4 mt-4 sm:mt-16">
       <div className="w-full flex justify-center items-center gap-3">
         <img
           src={currentTheme === "light" ? "icon-light.svg" : "icon-dark.svg"}

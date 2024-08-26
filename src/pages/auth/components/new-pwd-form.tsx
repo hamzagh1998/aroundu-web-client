@@ -96,6 +96,7 @@ export function NewPwdForm() {
           )}
           <Button
             type="submit"
+            size="lg"
             className="w-full font-bold mt-4"
             disabled={isPending}
           >
