@@ -82,15 +82,16 @@ export function SignupForm() {
         ? onFirebaseTwitterSignin()
         : onFirebaseFacebookSignin());
       if (data?.error) return;
-      const { displayName, email, photoURL } =
+
+      const { displayName, email, photoURL, uid } =
         data.detail as UserCredential["user"];
       const [firstName, lastName] = displayName?.split(" ") || ["", ""];
       //* Register user to db
       signupUserMutation.mutate({
         firstName: firstName.trim().toLowerCase(),
         lastName: lastName.trim().toLowerCase(),
-        email: email?.trim().toLowerCase()!,
-        photoURL: photoURL!,
+        email: provider === "facebook" ? uid : email!.trim().toLowerCase(),
+        photoURL: photoURL || "",
       });
     } catch (err) {
       deleteFirebaseCurrentUser(); // Remove the current user from Firebase in case registration fails in the database

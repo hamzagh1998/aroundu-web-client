@@ -5,7 +5,7 @@ import { apiBaseUrl } from "@/config";
 
 // Create an axios instance
 export const axiosInstance = axios.create({
-  baseURL: apiBaseUrl,
+  baseURL: apiBaseUrl + "/api",
 });
 
 // Add a request interceptor to include the Firebase token

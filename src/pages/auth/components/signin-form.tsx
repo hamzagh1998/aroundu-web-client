@@ -65,6 +65,7 @@ export function SigninForm() {
         ? onFirebaseTwitterSignin()
         : onFirebaseFacebookSignin());
       if (data?.error) return;
+
       const { displayName, email, photoURL, uid } =
         data.detail as UserCredential["user"];
       const [firstName, lastName] = displayName?.split(" ") || ["", ""];
@@ -80,6 +81,11 @@ export function SigninForm() {
       console.error(`${provider} signup failed`, err);
     }
   };
+
+  if (signinUserMutation.error) {
+    deleteFirebaseCurrentUser(); // Remove the current user from Firebase in case registration fails in the database
+    console.error(signinUserMutation.error);
+  }
 
   return (
     <Card>

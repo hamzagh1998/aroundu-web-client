@@ -8,7 +8,15 @@ export type UserDataType = {
   photoURL: string;
   storageUsageInMb: number;
   plan: "free" | "premium";
+  location: {
+    city: string;
+    country: string;
+    latitude: number;
+    longitude: number;
+  } | null;
+  connections: string[];
   groups: string[];
+  messages: string[];
   createdAt: Date;
   updatedAt: Date | null;
 };
