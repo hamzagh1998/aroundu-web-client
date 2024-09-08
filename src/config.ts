@@ -13,3 +13,5 @@ export const apiBaseUrl =
   import.meta.env.MODE === "development"
     ? import.meta.env.VITE_REACT_APP_API_BASE_DEV_URL
     : import.meta.env.VITE_REACT_APP_API_BASE_PROD_URL;
+
+export const googleApiKey = import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY;

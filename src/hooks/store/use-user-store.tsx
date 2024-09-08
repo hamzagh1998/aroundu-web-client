@@ -9,8 +9,7 @@ export type UserDataType = {
   storageUsageInMb: number;
   plan: "free" | "premium";
   location: {
-    city: string;
-    country: string;
+    address: string;
     latitude: number;
     longitude: number;
   } | null;

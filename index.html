@@ -4,6 +4,18 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/icon-dark.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      function initMap() {
+        // This function will be called when the Google Maps API is fully loaded
+        // You can dispatch a custom event here to notify your application
+        window.dispatchEvent(new Event("google-maps-ready"));
+      }
+    </script>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDN1WTDCZzpgrSus1yY1_7-fN63eSFdzmg&libraries=places&callback=initMap"
+    ></script>
     <title>AroundU</title>
   </head>
   <body>

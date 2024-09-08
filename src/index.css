@@ -61,6 +61,31 @@ input[type="number"] {
   transform-origin: 0% 50%;
 }
 
+.autocomplete-root {
+  position: relative;
+}
+
+.autocomplete-dropdown-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-item {
+  border-bottom: 1px solid #ddd;
+  color: #fff;
+}
+
+.suggestion-item--active {
+  background-color: #7c3aed;
+  color: #fff;
+}
+
 @keyframes progress {
   0% {
     transform: translateX(0) scaleX(0);
