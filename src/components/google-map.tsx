@@ -121,8 +121,8 @@ GoogleMap.LocateButton = () => {
       size="lg"
       onClick={handleLocation}
     >
-      <IoMdLocate size={24} />
-      Your current location
+      <IoMdLocate className="text-md lg:text-xl" />
+      <p className="text-md lg:text-lg">Your location</p>
     </Button>
   );
 };
@@ -189,7 +189,7 @@ GoogleMap.Map = () => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div ref={mapRef} className="w-full h-[600px]" />
+      <div ref={mapRef} className="w-full h-[500px]" />
     </Suspense>
   );
 };

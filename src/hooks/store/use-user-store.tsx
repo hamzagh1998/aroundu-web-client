@@ -13,6 +13,7 @@ export type UserDataType = {
     latitude: number;
     longitude: number;
   } | null;
+  isOnboarded: boolean;
   connections: string[];
   groups: string[];
   messages: string[];

@@ -19,7 +19,7 @@ export function Location() {
           <GoogleMap.Map />
           {locationCoordinates && address && (
             <Button size="lg" className="font-bold">
-              Confirm Location
+              Confirm My Location
             </Button>
           )}
         </GoogleMap>
