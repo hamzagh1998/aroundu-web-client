@@ -1,9 +1,13 @@
 import { Navigate } from "react-router-dom";
 
 import { useIsAuthenticated } from "@/hooks/use-is-authenticated";
+
+import { useUserStore } from "@/hooks/store/use-user-store";
+
 import { AUTH_PATHES } from "@/routes/auth.routes";
 
 import { SplashScreen } from "./splash-screen";
+import { OnboardingPage } from "@/pages/onboarding/onboarding";
 
 type PrivateRouteProps = {
   children: React.ReactNode;
@@ -12,12 +16,18 @@ type PrivateRouteProps = {
 export function PrivateRouteWrapper({ children }: PrivateRouteProps) {
   const isAuthenticated = useIsAuthenticated();
 
-  if (isAuthenticated === null) {
+  const { userData } = useUserStore();
+
+  if (isAuthenticated === null || (isAuthenticated && !userData)) {
     return <SplashScreen />;
   }
 
   return isAuthenticated ? (
-    children
+    userData?.isOnboarded ? (
+      children
+    ) : (
+      <OnboardingPage />
+    )
   ) : (
     <Navigate to={"/" + AUTH_PATHES.SIGNIN} />
   );
