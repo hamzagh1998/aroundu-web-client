@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBell, FaCompass, FaUser } from "react-icons/fa";
+import { FaBell, FaCompass } from "react-icons/fa";
 import { TiThMenu } from "react-icons/ti";
 import { FiHardDrive } from "react-icons/fi";
 import { MdEvent, MdGroupWork } from "react-icons/md";
@@ -19,15 +20,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { auth } from "@/lib/firebase/firebase.config";
-import { capitalizer } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import { ProfileForm } from "./components/profile-form";
+
+import { capitalizer } from "@/lib/utils";
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
   const currentTheme = useCurrentTheme();
 
   const { userData } = useUserStore();
+
+  const [showProfileForm, setShowProfileForm] = useState(false);
 
   return (
     <div className="flex min-h-screen w-full">
@@ -68,13 +73,6 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
               >
                 <MdGroupWork size={26} />
                 Connections
-              </Link>
-              <Link
-                to="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-4 text-lg text-muted-foreground transition-all hover:text-primary cursor-pointer"
-              >
-                <FaUser size={26} />
-                Profile
               </Link>
             </nav>
           </div>
@@ -134,13 +132,6 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                   <MdGroupWork size={26} />
                   Connections
                 </Link>
-                <Link
-                  to="#"
-                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-lg text-muted-foreground transition-all hover:text-primary"
-                >
-                  <FaUser size={26} />
-                  Profile
-                </Link>
               </nav>
             </SheetContent>
           </Sheet>
@@ -155,7 +146,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                   width="32"
                   height="32"
                   className="rounded-full"
-                  alt="Avatar"
+                  alt={userData?.firstName + " " + userData?.lastName}
                   style={{ aspectRatio: "32/32", objectFit: "cover" }}
                 />
                 <span className="sr-only">Toggle user menu</span>
@@ -168,7 +159,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                   width="32"
                   height="32"
                   className="rounded-full"
-                  alt="Avatar"
+                  alt={userData?.firstName + " " + userData?.lastName}
                   style={{ aspectRatio: "32/32", objectFit: "cover" }}
                 />
                 {capitalizer(userData?.firstName + " " + userData?.lastName)}
@@ -176,16 +167,19 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
               </DropdownMenuLabel>
               {userData?.plan === "free" && (
                 <DropdownMenuLabel className="flex justify-start items-end gap-1 text-xs">
-                  <Progress value={(userData?.storageUsageInMb * 100) / 200} />
-                  <span>{userData?.storageUsageInMb}/200MB</span>
+                  <Progress value={(userData?.storageUsageInMb * 100) / 100} />
+                  <span>{userData?.storageUsageInMb}/100MB</span>
                   <div>
                     <FiHardDrive size={18} />
                   </div>
                 </DropdownMenuLabel>
               )}
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuItem>Upgrade</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setShowProfileForm(true)}>
+                Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem>Feedback</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => auth.signOut()}>
                 Logout
@@ -200,6 +194,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
 
         {/* Main content area */}
         <div className="flex-1 mt-14 lg:mt-[60px] px-6">{children}</div>
+        <ProfileForm open={showProfileForm} setOpen={setShowProfileForm} />
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import { router } from "./routes";
 import { Toaster } from "./components/ui/toaster";
 import { SplashScreen } from "./components/splash-screen";
 import { GoogleMapContext } from "./context/google-map-context";
+import { auth } from "./lib/firebase/firebase.config";
 
 declare global {
   interface Window {
