@@ -2,11 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IoMdClose } from "react-icons/io";
-import { MdEdit } from "react-icons/md";
 
 import { auth } from "@/lib/firebase/firebase.config";
+import { cn } from "@/lib/utils";
+
 import { useUserStore } from "@/hooks/store/use-user-store";
 import { useFirebaseUploadFile } from "@/hooks/use-firebase-upload-file";
+
+import { ProfileType, profileSchema } from "@/schemas/profile";
 
 import {
   Dialog,
@@ -16,11 +19,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@radix-ui/react-label";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ProfileType, profileSchema } from "@/schemas/profile";
 
 export function ProfileForm({
   open,
@@ -49,6 +51,7 @@ export function ProfileForm({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [signInProvider, setSignInProvider] = useState<string | null>(null);
+  const [currentTabbar, setCurrentTabbar] = useState("profile");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -86,7 +89,7 @@ export function ProfileForm({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="lg:min-w-[950px]">
+      <DialogContent className="lg:min-w-[950px] max-md:h-full max-md:w-full overflow-auto">
         <DialogHeader className="text-left">
           <DialogTitle>Edit your profile</DialogTitle>
           <DialogDescription>
@@ -95,15 +98,30 @@ export function ProfileForm({
         </DialogHeader>
         <Separator orientation="horizontal" className="flex-1" />
         <form
-          className="w-full flex justify-between items-start gap-1"
+          className="w-full lg:flex justify-between items-start gap-1"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="w-3/12 border-r-2 border-r-border">
-            <p className="w-full p-2 cursor-pointer hover:bg-primary/30">
+          <div className="lg:w-3/12 lg:border-r-2 max-lg:flex justify-between items-center gap-2 max-lg:space-x-2 space-y-2 border-b-2 lg:border-r-border border-b-border lg:h-full lg:pr-2 pb-2">
+            <p
+              className={cn(
+                "w-full p-2 cursor-pointer rounded-lg",
+                currentTabbar === "profile" && "bg-primary"
+              )}
+              onClick={() => setCurrentTabbar("profile")}
+            >
               My Profile
             </p>
+            <p
+              className={cn(
+                "w-full p-2 cursor-pointer rounded-lg",
+                currentTabbar === "subscription" && "bg-primary"
+              )}
+              onClick={() => setCurrentTabbar("subscription")}
+            >
+              Subscription
+            </p>
           </div>
-          <div className="w-9/12">
+          <div className="lg:w-9/12">
             {/* Image Upload */}
             <div>
               <Label htmlFor="photo" className="text-lg">
@@ -144,10 +162,7 @@ export function ProfileForm({
                           </div>
                         </div>
                       ) : (
-                        <div
-                          className="flex justify-center items-center w-fit h-fit bg-muted-foreground rounded-full cursor-pointer"
-                          onClick={handleButtonClick}
-                        >
+                        <div onClick={handleButtonClick}>
                           <img
                             src={userData?.photoURL}
                             className="text-muted w-28 h-28"
