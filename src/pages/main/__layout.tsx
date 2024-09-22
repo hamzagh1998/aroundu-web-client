@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBell, FaCompass } from "react-icons/fa";
 import { TiThMenu } from "react-icons/ti";
@@ -31,6 +31,15 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
   const currentTheme = useCurrentTheme();
 
   const { userData } = useUserStore();
+
+  const fullName = useMemo(
+    () =>
+      (userData?.firstName + " " + userData?.lastName).trim().length > 15
+        ? (userData?.firstName + " " + userData?.lastName).trim().slice(0, 15) +
+          "..."
+        : userData?.firstName + " " + userData?.lastName,
+    [userData]
+  );
 
   const [showProfileForm, setShowProfileForm] = useState(false);
 
@@ -146,7 +155,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                   width="32"
                   height="32"
                   className="rounded-full"
-                  alt={userData?.firstName + " " + userData?.lastName}
+                  alt={fullName}
                   style={{ aspectRatio: "32/32", objectFit: "cover" }}
                 />
                 <span className="sr-only">Toggle user menu</span>
@@ -159,10 +168,10 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                   width="32"
                   height="32"
                   className="rounded-full"
-                  alt={userData?.firstName + " " + userData?.lastName}
+                  alt={fullName}
                   style={{ aspectRatio: "32/32", objectFit: "cover" }}
                 />
-                {capitalizer(userData?.firstName + " " + userData?.lastName)}
+                {capitalizer(fullName)?.trim()}
                 <Badge className="text-xs">{userData?.plan}</Badge>
               </DropdownMenuLabel>
               {userData?.plan === "free" && (

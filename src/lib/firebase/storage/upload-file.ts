@@ -15,12 +15,10 @@ export async function uploadFileToFbStorage(
   storageFolderName: string,
   action: "add" | "update"
 ) {
-  // Check if the file is null or undefined
   if (!file) {
     return { error: true, detail: "No file provided!" };
   }
 
-  // Check if the file size exceeds the limit
   if (file.size > limit) {
     return { error: true, detail: `File size exceeds the limit!` };
   }

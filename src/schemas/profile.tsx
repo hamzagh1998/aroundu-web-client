@@ -1,33 +1,44 @@
 import { z } from "zod";
 
-const MAX_FILE_SIZE = 8 * 1024 * 1024; // 8MB in bytes
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
+export const MAX_FILE_SIZE = 8 * 1024 * 1024; // 8MB in bytes
+export const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/svg+xml",
+];
 
 export const profileSchema = z
   .object({
-    firstName: z.string().min(1, "Enter a valid First name").optional(),
-    lastName: z.string().min(1, "Enter a valid Last name").optional(),
-    email: z.string().min(5, "Invalid email address").optional(),
+    firstName: z.string().min(1, "Enter a valid First name"),
+    lastName: z.string().min(1, "Enter a valid Last name"),
+    email: z.string().email("Invalid email address"),
     oldPassword: z
       .string()
       .min(6, "Password must be at least 6 characters")
+      .or(z.literal(""))
       .optional(),
     newPassword: z
       .string()
       .min(6, "Password must be at least 6 characters")
+      .or(z.literal(""))
       .optional(),
     confirmPassword: z
       .string()
       .min(6, "Password must be at least 6 characters")
+      .or(z.literal(""))
       .optional(),
     photo: z
       .instanceof(File)
-      .refine((file) => file.size <= MAX_FILE_SIZE, "Max file size is 8MB")
+      .optional()
       .refine(
-        (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
-        "Only .jpg, .png, and .webp formats are supported"
+        (file) => !file || file.size <= MAX_FILE_SIZE,
+        "Max file size is 8MB"
       )
-      .optional(),
+      .refine(
+        (file) => !file || ACCEPTED_IMAGE_TYPES.includes(file.type),
+        "Only .jpg, .png, and .webp formats are supported"
+      ),
     location: z
       .object({
         address: z.string().min(6, "Address is required"),
@@ -44,7 +55,7 @@ export const profileSchema = z
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
     path: ["confirmPassword"], // Error message will be on confirmPassword field
-    message: "Passwords must match",
+    message: "2 Passwords must match",
   });
 
 export type ProfileType = z.infer<typeof profileSchema>;

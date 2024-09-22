@@ -13,6 +13,9 @@ import {
   firebaseGithubSignin,
   firebaseGoogleSignin,
 } from "@/lib/firebase/auth/auth-with-provider";
+import { firebaseUpdateCredentials } from "@/lib/firebase/auth/change-credentials";
+
+import { toast } from "@/components/ui/use-toast";
 
 type AuthFunction = (
   email: string,
@@ -90,10 +93,35 @@ export function useFirebaseAuth() {
     oobCode: string,
     newPassword: string
   ) => {
+    setError(null);
     setIsPending(true);
     const data = await firebaseConfirmPasswordReset(oobCode, newPassword);
     if (data.error) {
       setError(data.detail as string);
+    }
+    setIsPending(false);
+    return data;
+  };
+
+  const onFirebaseUpdateCredentials = async (
+    currentPassword: string,
+    newCred: string,
+    credType: "email" | "password"
+  ) => {
+    setError(null);
+    setIsPending(true);
+    const data = await firebaseUpdateCredentials(
+      currentPassword,
+      newCred,
+      credType
+    );
+    if (data.error) {
+      setError(data.detail as string);
+    }
+    if (credType === "email") {
+      toast({
+        description: "Verification email sent to Your Inbox!",
+      });
     }
     setIsPending(false);
     return data;
@@ -109,8 +137,8 @@ export function useFirebaseAuth() {
     onFirebaseTwitterSignin,
     onFirebaseFacebookSignin,
     onFIrebaserMicrosoftSignin,
-    firebasePasswordResetEmail,
     onFirebasePasswordResetEmail,
     onFirebaseConfirmPasswordReset,
+    onFirebaseUpdateCredentials,
   };
 }
