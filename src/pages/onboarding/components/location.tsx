@@ -44,7 +44,6 @@ export function Location() {
       setError(
         "Failed to save your location, check your internet connection and try again!"
       );
-    } finally {
     }
   };
 
@@ -61,7 +60,7 @@ export function Location() {
           {locationCoordinates && address && (
             <Button
               size="lg"
-              className="flex justify-between items-center gap-2 font-bold"
+              className="flex justify-center items-center gap-2 font-bold float-end max-sm:w-full"
               disabled={updateProfile.isPending}
               onClick={onConfirmLocation}
             >

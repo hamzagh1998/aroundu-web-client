@@ -31,13 +31,7 @@ import { ErrorAlert } from "@/components/error-alert";
 import { CustomTooltip } from "@/components/custom-tooltip";
 import { reauthenticateUser } from "@/lib/firebase/auth/change-credentials";
 
-export function ProfileForm({
-  setOpen,
-  setCurrentTabbar,
-}: {
-  setOpen: (open: boolean) => void;
-  setCurrentTabbar: React.Dispatch<React.SetStateAction<string>>;
-}) {
+export function ProfileForm({ setOpen }: { setOpen: (open: boolean) => void }) {
   const {
     mutateAsync,
     error: updateProfileError,
@@ -388,7 +382,7 @@ export function ProfileForm({
       )}
       <div className="mt-6">
         <Button
-          type="submit"
+          size="lg"
           className="flex justify-center items-center gap-2 float-end max-sm:w-full"
           disabled={isLoading}
         >

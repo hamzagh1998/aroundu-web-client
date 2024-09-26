@@ -7,11 +7,13 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import { Separator } from "@/components/ui/separator";
-
 import { ProfileForm } from "./profile-form";
 
+import { Separator } from "@/components/ui/separator";
+import { GoogleMap } from "@/components/google-map";
+
 import { cn } from "@/lib/utils";
+import { LocationContainer } from "./location-container";
 
 export function ProfileModal({
   open,
@@ -24,12 +26,13 @@ export function ProfileModal({
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen(false)}>
-      <DialogContent className="lg:flex justify-between items-start gap-2 lg:min-w-[950px] max-md:h-full max-md:w-full overflow-auto">
+      <DialogContent className="lg:flex min-h-[750px] justify-between items-start gap-2 lg:min-w-[950px] max-md:h-full max-md:w-full overflow-auto">
         <div className="lg:w-3/12 lg:border-r-2 max-lg:flex justify-between items-center gap-2 max-lg:space-x-2 space-y-2 lg:border-r-border border-b-border lg:h-full lg:pr-2 pb-2">
           <p
             className={cn(
               "w-full p-2 cursor-pointer rounded-lg",
-              currentTabbar === "profile" && "bg-primary"
+              currentTabbar === "profile" &&
+                "bg-primary text-primary-foreground"
             )}
             onClick={() => setCurrentTabbar("profile")}
           >
@@ -38,7 +41,8 @@ export function ProfileModal({
           <p
             className={cn(
               "w-full p-2 cursor-pointer rounded-lg",
-              currentTabbar === "location" && "bg-primary"
+              currentTabbar === "location" &&
+                "bg-primary text-primary-foreground"
             )}
             onClick={() => setCurrentTabbar("location")}
           >
@@ -47,7 +51,8 @@ export function ProfileModal({
           <p
             className={cn(
               "w-full p-2 cursor-pointer rounded-lg",
-              currentTabbar === "subscription" && "bg-primary"
+              currentTabbar === "subscription" &&
+                "bg-primary text-primary-foreground"
             )}
             onClick={() => setCurrentTabbar("subscription")}
           >
@@ -62,11 +67,9 @@ export function ProfileModal({
             </DialogDescription>
           </DialogHeader>
           <Separator orientation="horizontal" className="flex-1" />
-          {currentTabbar === "profile" && (
-            <ProfileForm
-              setOpen={setOpen}
-              setCurrentTabbar={setCurrentTabbar}
-            />
+          {currentTabbar === "profile" && <ProfileForm setOpen={setOpen} />}
+          {currentTabbar === "location" && (
+            <LocationContainer setOpen={setOpen} />
           )}
         </div>
       </DialogContent>
