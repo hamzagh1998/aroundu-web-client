@@ -23,7 +23,7 @@ import { auth } from "@/lib/firebase/firebase.config";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { ModeToggle } from "@/components/ui/mode-toggle";
-import { ProfileForm } from "./components/profile-form";
+import { ProfileModal } from "./components/profile-modal";
 
 import { capitalizer } from "@/lib/utils";
 
@@ -203,7 +203,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
 
         {/* Main content area */}
         <div className="flex-1 mt-14 lg:mt-[60px] px-6">{children}</div>
-        <ProfileForm open={showProfileForm} setOpen={setShowProfileForm} />
+        <ProfileModal open={showProfileForm} setOpen={setShowProfileForm} />
       </div>
     </div>
   );
